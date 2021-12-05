@@ -30,7 +30,7 @@ const Table = () => {
     const res = await fetch(`http://localhost:7000/users/${id}`);
 
     const data = await res.json();
-    Navigate("/create");
+    Navigate("/create", { state: data });
   };
 
   useEffect(() => {

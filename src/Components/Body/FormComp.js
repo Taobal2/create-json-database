@@ -7,21 +7,39 @@ import {
   Button,
   Div,
 } from "../Styles/Form.styled";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FormComp = ({ onFormSubmit }) => {
-  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [age, setAge] = useState("");
+  const location = useLocation();
+  const users = location.state;
+
+  // const [users, setUsers] = useState([]);
+
+  const [firstName, setFirstName] = useState(
+    users && users.firstName != null ? users.firstName : ""
+  );
+  const [lastName, setLastName] = useState(
+    users && users.lastName != null ? users.lastName : ""
+  );
+  const [email, setEmail] = useState(
+    users && users.email != null ? users.email : ""
+  );
+  const [address, setAddress] = useState(
+    users && users.address != null ? users.address : ""
+  );
+  const [mobileNumber, setMobileNumber] = useState(
+    users && users.mobileNumber != null ? users.mobileNumber : ""
+  );
+  const [age, setAge] = useState(users && users.age != null ? users.age : "");
+  const [id, setId] = useState(users && users.id != null ? users.id : null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const details = {
+      id: id,
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -37,6 +55,10 @@ const FormComp = ({ onFormSubmit }) => {
     setAge("");
     setMobileNumber("");
     setAddress("");
+  };
+
+  const goBack = () => {
+    navigate("/");
   };
 
   return (
@@ -114,7 +136,8 @@ const FormComp = ({ onFormSubmit }) => {
             }}
           />
         </Content>
-        <Button type="submit">Add</Button>
+        <Button type="submit">save</Button>
+        <Button onClick={goBack}>cancel</Button>
       </Form>
     </Div>
   );
